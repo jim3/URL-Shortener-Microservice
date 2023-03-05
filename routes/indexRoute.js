@@ -4,7 +4,6 @@ const dns = require("dns");
 
 const urlData = []; // array to store the URL and short URL (test-only mock database)
 
-// generate a random 6-digit alphanumeric string
 function generateShortUrl() {
     const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     let shortUrl = "";
@@ -30,8 +29,7 @@ router.get("/api/shorturl/:shorturl", (req, res) => {
 router.post("/api/shorturl", (req, res) => {
     const url = req.body.url;
     const urlObject = new URL(url);
-
-    // (*) Note the `urlObject.hostname`, this was key in getting the dns.lookup() to work
+    
     dns.lookup(urlObject.hostname, (err, address, family) => {
         if (err) {
             console.log(`DNS lookup error: ${err}`);
